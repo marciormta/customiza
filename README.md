@@ -1,4 +1,4 @@
-# customiza
+import matplotlib.pyplot as plt
 
 # Filtrar apenas as linhas com FRENTE_EXECUTIVA igual a 'REPERFORMANCE' ou 'DEMANDA_PASSIVA'
 df = df[df['FRENTE_EXECUTIVA'].isin(['REPERFORMANCE', 'DEMANDA_PASSIVA'])]
@@ -15,5 +15,11 @@ df = df[df.groupby('CHAVE')['primeira_reperformance'].cumsum() > 0]
 # Filtrar apenas as linhas com FRENTE_EXECUTIVA igual a 'DEMANDA_PASSIVA'
 df = df[df['FRENTE_EXECUTIVA'] == 'DEMANDA_PASSIVA']
 
-# Selecionar a coluna NOME_DOCUMENTO
-resultados = df['NOME_DOCUMENTO']
+# Agrupar por CHAVE e contar o número de documentos de demanda passiva incluídos após a primeira entrada de reperformance
+contagem = df.groupby('CHAVE').size()
+
+# Criar um gráfico de barras
+contagem.plot(kind='bar')
+plt.xlabel('CHAVE')
+plt.ylabel('Contagem de documentos de demanda passiva')
+plt.show()
